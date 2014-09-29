@@ -1,7 +1,6 @@
 include $(PQ_FACTORY)/factory.mk
 
-$(info AG)
-$(call show_vars,pq_part_dir_pq-gmp)
+$(call show_vars,pq-gmp-dir)
 
 pq_module_name := mpfr-2.4.2
 pq_module_file := $(pq_module_name).tar.bz2
@@ -19,7 +18,7 @@ configure: configure-stamp
 configure-stamp: patch-stamp
 	(cd $(pq_module_name) && \
 		./configure --prefix=$(part_dir) \
-				--with-gmp=$(pq_part_dir_pq-gmp) \
+			    --with-gmp=$(pq-gmp-dir) \
 	) && touch $@
 
 patch: patch-stamp

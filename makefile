@@ -2,30 +2,26 @@ include $(PQ_FACTORY)/factory.mk
 
 $(call show_vars,pq-gmp-dir)
 
-pq_module_name := mpfr-2.4.2
-pq_module_file := $(pq_module_name).tar.bz2
+pq_part_name := mpfr-2.4.2
+pq_part_file := $(pq_part_name).tar.bz2
 
-build: build-stamp
 build-stamp: stage-stamp
-	(cd $(pq_module_name) && \
-		$(MAKE) && \
-		$(MAKE) install DESTDIR=$(stage_dir) \
-	) && touch $@
+	$(MAKE) -C $(pq_part_name) && \
+	$(MAKE) -C $(pq_part_name) install DESTDIR=$(stage_dir) && \
+	touch $@
 
 stage-stamp: configure-stamp
 
-configure: configure-stamp
 configure-stamp: patch-stamp
-	(cd $(pq_module_name) && \
+	( \
+		cd $(pq_part_name) && \
 		./configure --prefix=$(part_dir) \
 			    --with-gmp=$(pq-gmp-dir) \
 	) && touch $@
 
-patch: patch-stamp
 patch-stamp: unpack-stamp
 	touch $@
 
-unpack: unpack-stamp
-unpack-stamp: $(pq_module_file)
-	tar jxf $(source_dir)/$(pq_module_file) && touch $@
+unpack-stamp: $(pq_part_file)
+	tar jxf $(source_dir)/$(pq_part_file) && touch $@
 

@@ -1,1 +1,1 @@
-part: 'pq-gmp'
+part: 'pq-gmp', branch: '6.0.0a'
